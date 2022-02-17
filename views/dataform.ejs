@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Node</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+    <style>
+        .form__group {
+            position: relative;
+            padding: 15px 0 0;
+            margin-top: 10px;
+            width: 50%;
+        }
+
+        .form__field {
+            font-family: inherit;
+            /* width:100%; */
+            border: 0;
+            border-bottom: 2px solid #9b9b9b;
+            outline: 0;
+            font-size: 1.3rem;
+            color: rgb(48, 39, 39);
+            padding: 7px 0;
+            background: transparent;
+            transition: border-color 0.2s;
+        }
+
+        .form__field::placeholder {
+            color: transparent;
+        }
+
+        .form__field:placeholder-shown~.form__label {
+            font-size: 1.3rem;
+            cursor: text;
+            top: 20px;
+        }
+
+        .form__label {
+            position: absolute;
+            top: 0;
+            display: block;
+            transition: 0.2s;
+            font-size: 1rem;
+            color: #3a3838;
+        }
+
+        .form__field:focus {
+            padding-bottom: 6px;
+            font-weight: 700;
+            border-width: 3px;
+            border-image: linear-gradient(to right, #032421, #142219);
+            border-image-slice: 1;
+        }
+
+        .form__field:focus~.form__label {
+            position: absolute;
+            top: 0;
+            display: block;
+            transition: 0.2s;
+            font-size: 1rem;
+            color: #11998e;
+            font-weight: 700;
+        }
+
+        /* reset input */
+        .form__field:required,
+        .form__field:invalid {
+            box-shadow: none;
+        }
+
+        /* demo */
+    </style>
+    <!-- Booststrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <!-------------------------- Fontawesome Icon --------------------------------->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+        }
+        .star{
+            color: red;font-size: larger; 
+            font-weight: bolder;
+
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-success ">
+        <div class="container-fluid">
+            <nav class="navbar navbar-light ">
+                <div class="container-fluid p-3">
+                    <a class="navbar-brand" href="#">
+
+                    </a>
+                </div>
+            </nav>
+
+        </div>
+    </nav>
+    <div class="container p-5">
+        <div class=" bg-body rounded  ">
+
+            <div class="  pl-5  pt-4  row">
+
+                <div class="col-xl-6 col-md-6">
+                    <center>
+
+                        <img src="https://icon-library.com/images/account-512_102393.png" alt="" width="60"
+                            class="img img-fluid mb-3" srcset="">
+                        <h4 class="text-success">Applicant info</h4>
+                    </center>
+                </div>
+                <div class="col-xl-6 col-md-6">
+                    <center>
+
+                        <img src="https://icon-library.com/images/account-512_102393.png" alt="" width="60"
+                            class="img img-fluid mb-3" srcset="">
+                        <h4 class="text-success">Applicant info</h4>
+                    </center>
+                </div>
+
+
+
+                </center>
+            </div>
+            <form action="/form-data" method="POST">
+                <div class="row mb-3">
+                    <div class="col-4">
+                        <div class="form__group field">
+                            <input type="text" class="form__field" placeholder="First Name" name="fname" id='fname'
+                                 />
+                            <label for="fname" class="form__label">First Name<span class="star">*</span></label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form__group field">
+                            <input type="text" class="form__field" placeholder="Middle Name" name="mname" id='mname' />
+                            <label for="mname" class="form__label">Middle Name</label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form__group field">
+                            <input type="text" class="form__field" placeholder=" Last Name" name="lname" id='lname'
+                                 />
+                            <label for="lname" class="form__label">Last Name<span class="star">*</span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-8">
+                        <div class="form__group field">
+                            <input type="text" class="form__field" placeholder="Street Address" name="address"
+                                id='address'  />
+                            <label for="address" class="form__label">Street Address<span class="star">*</span></label>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="form__group field">
+                            <input type="text" class="form__field" placeholder=" Last Name" name="unit" id='unit'
+                                 />
+                            <label for="unit" class="form__label">Unit #</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4">
+                        <div class="form__group field">
+                            <input type="text" class="form__field" placeholder="First Name" name="city" id='city'
+                                 />
+                            <label for="city" class="form__label">City<span class="star">*</span> </label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form__group field">
+
+                            <select type="text" class="form__field" name="state" id='state' placeholder="Zip Code"
+                                >
+                                <option disabled selected value>Select</option>
+                                <option value="MP">Madhya Pradesh</option>
+                                <option value="UP">Uttar Pradesh</option>
+                            </select>
+                            <label for="state" class="form__label">State<span class="star">*</span></label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form__group field">
+
+                            <input type="text" class="form__field" name="zip" id='zip' placeholder="Zip Code"
+                                 />
+                            <label for="zip" class="form__label">Zip Code<span class="star">*</span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <div class="form__group field">
+                            <input type="text" class="form__field" placeholder="First Name" name="phone" id='phone'
+                                 />
+                            <label for="phone" class="form__label">Phone Number<span class="star">*</span></label>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="form__group field">
+                            <input type="text" style="border-width: 100%;" class="form__field" placeholder=" Last Name"
+                                name="email" id='email'  />
+                            <label for="email" class="form__label">Email Address<span class="star">*</span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4">
+                        <div class="form__group field">
+                            <select type="text" class="form__field" name="deduction" id='deduction'
+                                placeholder="Zip Code" >
+                                <option disabled selected value>Select</option>
+                                <option value="Primary">Primary</option>
+                                <option value="Secondory">Secondory</option>
+                            </select>
+                            <label for="deduction" class="form__label">Prefferred Deduction<span class="star">*</span></label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form__group field">
+                            <input type="date" class="form__field" placeholder="Middle Name" name="dob" id='dob' />
+                            <label for="dob" class="form__label">Date of Birth<span class="star">*</span></label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form__group field">
+                            <select type="text" class="form__field" name="residency_status" id='residency_status' placeholder="Zip Code" >
+                                <option disabled selected value>Select</option>
+                                <option value="Primary">Primary</option>
+                                <option value="Secondory">Secondory</option>
+                            </select>
+                            <label for="residency_status" class="form__label">Residency Status<span class="star">*</span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-4">
+                        <div class="form__group field">
+                            <select type="text" class="form__field" name="industry" id='industry' placeholder="Zip Code"
+                                >
+                                <option disabled selected value>Select</option>
+                                <option value="Primary">Primary</option>
+                                <option value="Secondory">Secondory</option>
+                            </select>
+                            <label for="industry" class="form__label">Industry<span class="star">*</span></label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form__group field">
+                            <select type="text" class="form__field" name="occupation" id='occupation'
+                                placeholder="Zip Code" >
+                                <option disabled selected value>Select</option>
+                                <option value="Primary">Primary</option>
+                                <option value="Secondory">Secondory</option>
+                            </select>
+                            <label for="occupation" class="form__label">Occupation<span class="star">*</span></label>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form__group field">
+                            <select type="text" class="form__field" name="education" id='education'
+                                placeholder="Zip Code" >
+                                <option disabled selected value>Select</option>
+                                <option value="Primary">Primary</option>
+                                <option value="Secondory">Secondory</option>
+                            </select>
+                            <label for="education" class="form__label">Education<span class="star">*</span></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3 mt-5">
+                    <div class="col-4">
+                        <label for="house">
+                            <div class="card  mb-3 shadow" style="max-width: 18rem;">
+                                <div class="card-body ">
+                                    <h5 class="card-title text-primary">Home<input type="radio" name="plan" id="house" value="house"
+                                            class="mt-2" style="float:right;" ></h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the bulk of the card's
+                                        content.</p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="col-4">
+                        <label for="condo">
+                            <div class="card  mb-3 shadow" style="max-width: 18rem;">
+                                <div class="card-body ">
+                                    <h5 class="card-title text-danger">Condo<input type="radio" name="plan" id="condo" value="condo"
+                                            class="mt-2" style="float:right;"></h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the bulk of the card's
+                                        content.</p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="col-4">
+                        <label for="HO5">
+                            <div class="card  mb-3 shadow" style="max-width: 18rem;">
+                                <div class="card-body ">
+                                    <h5 class="card-title " style="color:purple">HO5<input type="radio" name="plan" id="HO5" value="HO5"
+                                            class="mt-2" style="float:right;"></h5>
+                                    <p class="card-text">Some quick example text to build on the card title and make up
+                                        the bulk of the card's
+                                        content.</p>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+        </div>
+            <center>
+
+                <button type="submit" class="btn btn-success btn-lg btn-rounded">Continue</button>
+            </center>
+        </form>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+             $(document).ready(function () {
+                    
+
+                    $("form").submit(function (event) {
+                        event.preventDefault();
+
+                        var url = event.target.action  // get the target
+                        var formData = $(this).serializeArray()
+                       
+                        $.post(url, formData, function (response) {
+                            alert(response.message)
+                            // $('form').find('input').val('');
+                            // $('#users').html("")
+                            // allData()
+                        })
+                      
+
+                    });
+                });
+        </script>
+    </div>
+    </div>
+</body>
+
+</html>

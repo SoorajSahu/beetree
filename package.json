@@ -47,13 +47,9 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
-    "http-errors": "^1.8.1",
-    "joi": "^17.5.0",
     "lint": "^1.1.2",
     "lint-cli": "^1.0.0",
     "lodash": "^4.17.21",
-    "mongodb": "^4.2.1",
-    "mongoose": "^6.0.14",
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
     "pg": "^8.7.1",
@@ -63,8 +59,6 @@
     "request": "^2.88.2",
     "sequelize": "^6.12.0-beta.1",
     "sequelize-cli": "^6.4.1",
-    "shortid": "^2.2.16",
-    "swagger-jsdoc": "^6.1.0",
-    "swagger-ui-express": "^4.3.0"
+    "shortid": "^2.2.16"
   }
 }

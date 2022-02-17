@@ -1,0 +1,60 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextIndex", "fullTextSearch"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model admins {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique(map: "email") @db.VarChar(255)
+  role      String   @default("sub-admin") @db.VarChar(30)
+  is_valid  Int      @default(0)
+  name      String   @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+
+}
+
+model SequelizeMeta {
+  name String @id @unique(map: "name") @db.VarChar(255)
+}
+
+model categories {
+  id        Int      @id @default(autoincrement())
+  image_url String?  @db.VarChar(800)
+  name      String   @db.VarChar(255)
+  tag       String   @db.VarChar(255)
+  createdAt DateTime @default(now())
+
+}
+
+model links {
+  id          Int     @id @default(autoincrement())
+  category_id Int
+  image_link  String? @db.VarChar(255)
+  link_type   String? @db.VarChar(10)
+  active_link Int?
+  title       String  @db.VarChar(255)
+  tags        String? @db.VarChar(255)
+  link        String  @db.VarChar(255)
+  description String? @db.Text
+  author      String  @db.VarChar(255)
+
+}
+
+model users {
+  user_id   Int     @id @default(autoincrement())
+  name      String  @db.VarChar(100)
+  email     String  @db.VarChar(100)
+  photo_url String? @db.Text
+  code      String? @unique(map: "code") @db.VarChar(30)
+  referral  String? @unique(map: "referral") @db.VarChar(30)
+  premium   Int?    @default(0)
+  points    Int?    @default(0)
+  bio       String? @db.VarChar(255)
+  website   String? @db.VarChar(255)
+}
