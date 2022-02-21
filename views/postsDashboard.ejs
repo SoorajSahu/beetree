@@ -250,7 +250,7 @@
                     </div>
                   </div>
                   <div class="widget-content-left ml-3 header-user-info">
-                    <div class="widget-heading">Alina Mclourd</div>
+                    <div class="widget-heading"></div>
                     <div class="widget-subheading">VP People Manager</div>
                   </div>
                   <div class="widget-content-right header-user-info ml-3">
@@ -822,15 +822,11 @@
                         <div class="input-group">
                           <select
                             name="category_id"
-                            id=""
+                            id="users"
                             class="form-control"
                             required
                           >
-                            <% for(let i=0;i< categories.length;i++){ %>
-                            <option value="<%=categories[i].id%>">
-                              <%=categories[i].name %>
-                            </option>
-                            <% } %>
+                          
                           </select>
                         </div>
                       </div>
@@ -843,27 +839,8 @@
                             class="form-control"
                             required
                           >
-                            <% for(let i=0;i< link_type.length;i++){ %>
-                            <option value="<%=link_type[i].id%>">
-                              <%=link_type[i].name %>&ThinSpace;
-                              (<%=link_type[i].id%>)
-                            </option>
-                            <% } %>
+                          
                           </select>
-                        </div>
-                      </div>
-                       <div class="mb-3 col-xl-12">
-                        <label for="name" class="form-label">Author Or Creator Name</label>*
-                        <div class="input-group">
-                          <input
-                            type="text"
-                            class="form-control"
-                            name="author"
-                            placeholder="Enter Author Or Creator Name"
-                            aria-label="author"
-                            aria-describedby="basic-addon1"
-                            required
-                          />
                         </div>
                       </div>
                       <div class="mb-3 col-xl-12">
@@ -975,17 +952,14 @@
                         </div> -->
             </div>
           </div>
+          <option value=""></option>
           <script>
+            
             function allData() {
-              $.get('../api/all-category', (data) => {
+              $.get('../api/categories/all', (data) => {
                 let newHtml = '';
                 data.forEach((element) => {
-                  newHtml += `<tr>
-                                <td>${element.id}</td>
-                                <td>${element.name}</td>
-                                <td>${element.tag}</td>
-                                <td><button onClick=" deleteCategory(${element.id})" class="btn btn-danger">Delete</button></td>
-                                </tr>`;
+                  newHtml += `<option value="${element.id}">${element.name}</option>`;
                 });
                 $('#users').html(newHtml);
               });
@@ -1013,12 +987,11 @@
                     autocomplete :{
                         source: function(request, response)
                         {
-                            jQuery.get('../api/all-category-one', {
+                            jQuery.get('../api/categories/all-category-one', {
                                 query : request.term
-                            }, function(data){
-                                // data = JSON.parse(data);
+                            }, function(data){                                
                                 ar =[]
-                                data.find(object=> ar.push(object.tag))
+                                data.forEach(object=> ar.push(object.tag))
                                 response(ar);
                             });
                         },
