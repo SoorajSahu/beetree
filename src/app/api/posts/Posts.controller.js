@@ -1,5 +1,6 @@
 const { PrismaClient } = require("@prisma/client");
-const { CategorySchema } = require('../../../helper/validationSchema');
+const {  PostsDataValidation } = require('../../../helper/validationSchema');
+const PostService = require('../../service/posts.service')
 
 const prisma = new PrismaClient;
 
@@ -15,52 +16,81 @@ module.exports = {
     },
     showPostsBySearch: async (req, res) => {
         try {
-            if ((req.query.query).length > 0) {
+            if (req.query.query.length > 0) {
                 const q = req.query.query;
-                await prisma.posts.findMany({
-                    select:{
-                        tag:true,
-                    },
-                    where: {
-                        tag:{
-                            contains: q ,
+                await prisma.posts
+                    .findMany({
+                        select: {
+                            tag: true,
                         },
-                    },
-                }).then((data) => {
-                    res.status(200).send(data);
-                });
+                        where: {
+                            tag: {
+                                contains: q,
+                            },
+                        },
+                    })
+                    .then((data) => {
+                        res.status(200).send(data);
+                    });
             } else {
                 res.status(200).send([]);
             }
-     
         } catch (error) {
             res.status(500).send({ message: error.message });
         }
     },
-    addCategory: async (req, res) => {
+    addPost: async (req, res) => {
         try {
-            const data = await CategorySchema.validateAsync(req.body);
-            const rows = await prisma.posts.findMany({
-                where: { 
-                    name: data.name,
-                },
-            });         
-            
-            if (rows.length === 0) {
-                await prisma.posts.create({
-                    data:{
-                        image_url: data.image_url,
+            const data = await PostsDataValidation.validateAsync(req.body);
+            const rows = await PostService.getAllByCondition({
+                OR: [
+                    {
                         name: data.name,
-                        tag: data.name.toLowerCase().replace(/\s+/g, '-'),
-      
                     },
-                }).then(() => {
-                    res.status(201).send({ message: 'category added' });
+                    {
+                        link: data.link,
+                    },
+                ],
+            });
+            if (!rows.length) {
+                await prisma.posts.create({ data }).then(() => {
+                    res.status(201).send({ message: 'Post Added Successfully' });
                 });
-            } else {res.status(200).send({ message: 'Category already exist!.' });}
-            
+            } else {
+                res.status(500).send({ message: 'Post title Or link already exist!.' });
+            }
+            res.send(data);
         } catch (error) {
-            res.status(200).send({ message: error.message });
+            res.status(500).send({ message: error.message });
         }
     },
-}
+    updatePost: async (req, res) => {
+        try {
+            const data = await PostsDataValidation.validateAsync(req.body);
+            const rows = await prisma.posts.findMany({
+                where: {
+                    OR: [
+                        {
+                            name: data.name,
+                        },
+                        {
+                            link: data.link,
+                        },
+                    ],
+                },
+            });
+
+            if (!rows.length) {
+                await prisma.posts.create({ data }).then(() => {
+                    res.status(201).send({ message: 'Post Added Successfully' });
+                });
+            } else {
+                res.status(200).send({ message: 'Post title Or link already exist!.' });
+            }
+            res.send(data);
+        } catch (error) {
+            console.log(error.message);
+            res.status(500).send({ message: error.message });
+        }
+    },
+};

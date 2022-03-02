@@ -37,7 +37,7 @@ model posts {
   category_id Int
   image_link  String? @db.VarChar(255)
   link_type   String? @db.VarChar(10)
-  active_link Int?
+  active_link Boolean @default(true)
   title       String  @db.VarChar(255)
   tags        Json
   link        String  @db.VarChar(255)

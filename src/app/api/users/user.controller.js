@@ -27,6 +27,7 @@ module.exports = {
             const uniqueCode = !UserService.getOneByCondition({
                 code: hash,
             }) ? hash : genrateUniqueHash(results.name);
+            console.log('uniqueCode', uniqueCode);
             const isStored = await prisma.users.create({
                 data: {
                     email: results.email,
@@ -42,6 +43,7 @@ module.exports = {
             }
 
         } catch (error) {
+            console.log(error.message);
             res.status(500).send({
                 message: error.message,
             });

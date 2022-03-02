@@ -14,7 +14,7 @@ app.use('/api', route);
 
 route.use('/categories', CategoriesRoute);
 
-route.use('/posts', PostsRoute);
+route.use('/post', PostsRoute);
 
 route.use('/user', UserRoutes);
 
