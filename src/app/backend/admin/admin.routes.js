@@ -1,15 +1,22 @@
 const express = require('express');
 
 const route = express.Router();
-const { authentication, signinPage,signupPage, register } = require('./admin.controller');
+const {
+    authentication,
+    signinPage,
+    signupPage,
+    register,
+    postsDashboardShow,
+    showAllPosts,
+} = require('./admin.controller');
 const { CheckUserIsAdmin, AdminLogout } = require('../../middleware/admin/admin');
 
 const dashboardShow = (req, res) => res.render('categoryOps', { user: req.session.auth });
 
-const postsDashboardShow = (req, res) => res.render('postsDashboard', { user: req.session.auth });
 
 
-route.get('/', (req,res)=>res.redirect('/admin/signin'));
+
+route.get('/', (req, res) => res.redirect('/admin/signin'));
 
 route.get('/signin', signinPage);
 
@@ -24,5 +31,7 @@ route.get('/logout', AdminLogout);
 route.get('/category', CheckUserIsAdmin, dashboardShow);
 
 route.get('/posts', CheckUserIsAdmin, postsDashboardShow);
+
+route.get('/all-posts', CheckUserIsAdmin, showAllPosts);
 
 module.exports = route;

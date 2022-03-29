@@ -102,8 +102,18 @@ const authentication = async(req, res) => {
 const dashboard = (req, res) => {
     res.render('dashboard');
 }
+const postsDashboardShow = async(req, res) => {
+    const posts = await prisma.posts.findMany();
+    res.render('addPosts', { user: req.session.auth, posts });
+}
+const showAllPosts = async(req, res) => {
+    const posts = await prisma.posts.findMany();
+    res.render('postsDashboard', { user: req.session.auth, posts });
+}
 module.exports = {
     signinPage,
+    postsDashboardShow,
+    showAllPosts,
     signupPage,
     register,
     authentication,

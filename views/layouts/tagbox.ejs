@@ -1,0 +1,28 @@
+<input type="text" id="" title="Add Tags Helps to Search Posts.." placeholder="Add Tags Helps to Search Posts.." autocomplete="off" class="form-control input-lg search_data" />
+
+
+
+<script>
+    $(document).ready(function() {
+
+        $('.search_data').tokenfield({
+            autocomplete: {
+                source: function(request, response) {
+                    jQuery.get('../api/categories/all-category-one', {
+                        query: request.term
+                    }, function(data) {
+                        ar = []
+                        data.forEach(object => ar.push(object.tag))
+                        response(ar);
+                    });
+                },
+                delay: 100
+            }
+        });
+
+        $('#search').click(function() {
+            $('#country_name').text($('#search_data').val());
+        });
+
+    });
+</script>

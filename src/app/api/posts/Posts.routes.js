@@ -8,10 +8,11 @@ const {
 
 const route = express.Router();
 
-route.get('/all',                  showPosts);     // API
-route.get('/all-category-one',     showPostsBySearch); // API
-route.post('/',                    addPost); 
-route.post('/update',              updatePost); // API
+// get all posts - /post/all
+route.get('/all', showPosts); // API
+route.get('/post', showPostsBySearch); // API
+route.post('/', addPost); // API
+route.post('/update', updatePost); // API
 
 
 module.exports = route;

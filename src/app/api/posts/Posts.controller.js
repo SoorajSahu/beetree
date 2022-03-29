@@ -1,5 +1,5 @@
 const { PrismaClient } = require("@prisma/client");
-const {  PostsDataValidation } = require('../../../helper/validationSchema');
+const { PostsDataValidation } = require('../../../helper/validationSchema');
 const PostService = require('../../service/posts.service')
 
 const prisma = new PrismaClient;
@@ -14,37 +14,44 @@ module.exports = {
             res.status(500).send({ message: error.message });
         }
     },
-    showPostsBySearch: async (req, res) => {
+    showPostsBySearch: async(req, res) => {
         try {
+            let data = {};
             if (req.query.query.length > 0) {
                 const q = req.query.query;
-                await prisma.posts
-                    .findMany({
-                        select: {
-                            tag: true,
-                        },
-                        where: {
-                            tag: {
-                                contains: q,
-                            },
-                        },
-                    })
-                    .then((data) => {
-                        res.status(200).send(data);
-                    });
+                const qu = { contains: q }
+                data = await prisma.posts.findMany({
+                    where: {
+                        OR: [{
+                            author: qu,
+                        }, {
+
+                            description: qu,
+                        }, {
+
+                            title: qu,
+                        }],
+                    },
+                    take: 10,
+                })
             } else {
-                res.status(200).send([]);
+                data = await prisma.posts
+                    .findMany({
+                        take: 10,
+                    })
             }
+            res.status(200).send(data);
         } catch (error) {
             res.status(500).send({ message: error.message });
         }
     },
-    addPost: async (req, res) => {
+    addPost: async(req, res) => {
         try {
-            const data = await PostsDataValidation.validateAsync(req.body);
+            const { body } = req;
+            body.tags = (req.body.tags).split(', ');
+            const data = await PostsDataValidation.validateAsync(body);
             const rows = await PostService.getAllByCondition({
-                OR: [
-                    {
+                OR: [{
                         name: data.name,
                     },
                     {
@@ -64,13 +71,12 @@ module.exports = {
             res.status(500).send({ message: error.message });
         }
     },
-    updatePost: async (req, res) => {
+    updatePost: async(req, res) => {
         try {
             const data = await PostsDataValidation.validateAsync(req.body);
             const rows = await prisma.posts.findMany({
                 where: {
-                    OR: [
-                        {
+                    OR: [{
                             name: data.name,
                         },
                         {
