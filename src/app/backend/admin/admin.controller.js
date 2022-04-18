@@ -104,11 +104,11 @@ const dashboard = (req, res) => {
 }
 const postsDashboardShow = async(req, res) => {
     const posts = await prisma.posts.findMany();
-    res.render('addPosts', { user: req.session.auth, posts });
+    res.render('posts/addPosts', { user: req.session.auth, posts });
 }
 const showAllPosts = async(req, res) => {
     const posts = await prisma.posts.findMany();
-    res.render('postsDashboard', { user: req.session.auth, posts });
+    res.render('posts/postsDashboard', { user: req.session.auth, posts });
 }
 module.exports = {
     signinPage,

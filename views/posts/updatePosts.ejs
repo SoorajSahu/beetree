@@ -1,0 +1,214 @@
+<%- include('../layouts/sidebar.ejs') %>
+    <style>
+        .text-overflows {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+            font-size: medium;
+            color: darkslategrey;
+        }
+    </style>
+    </div>
+    <div class="app-main__outer">
+        <div class="app-main__inner">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h5>Add Posts</h5>
+
+                    </div>
+                    <div class="card-body">
+                        <form class="mt-3" action="/api/post" id="addBlogs">
+                            <div class="row">
+                                <div class="mb-3 col-xl-12">
+                                    <label for="name" class="form-label">Title</label>*
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="title" placeholder="Enter Blog Title" aria-label="name" aria-describedby="basic-addon1" required />
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-xl-4">
+                                    <label for="name" class="form-label">Blog Status</label
+                                    >*
+                                 <div class="input-group">
+                                    <select
+                                       name="active_link"
+                                       class="form-control"
+                                       required
+                                       >
+                                       <option value="true" selected>Active</option>
+                                       <option value="false">Disable</option>
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="mb-3 col-xl-4">
+                                 <label for="name" class="form-label"
+                                    >Select Category</label
+                                    >*
+                                 <div class="input-group">
+                                    <select
+                                       name="category_id"
+                                       id="users"
+                                       class="form-control"
+                                       required
+                                       >
+                                    </select>
+                                 </div>
+                              </div>
+                              <div class="mb-3 col-xl-4">
+                                 <label for="name" class="form-label">Link Type</label>*
+                                    <div class="input-group">
+                                        <select name="link_type" id="" class="form-control" required>
+                                       <option selected value="">Please Select</option>
+                                       <option value="BLOG">Blog</option>
+                                       <option value="VIDEO">Video</option>
+                                       <option value="STORY">Story</option>
+                                       <option value="PODCAST">Podcast</option>
+                                    </select>
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-xl-12">
+                                    <label for="link" class="form-label">Blog URL</label>*
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="link" name="link" placeholder="Blog URL" aria-label="link" aria-describedby="basic-addon1" required />
+                                    </div>
+                                </div>
+                                <div class="mb-3 col-xl-12">
+                                    <label for="image_link" class="form-label">Thumbnail URL</label
+                                    >
+                                 <div class="input-group">
+                                    <input
+                                       type="text"
+                                       class="form-control"
+                                       id="image_link"
+                                       name="image_link"
+                                       placeholder="Enter image URL"
+                                       aria-label="name"
+                                       aria-describedby="basic-addon1"
+                                       />
+                                 </div>
+                              </div>
+                              <input type="hidden" value="<%=user.email%>" name="author"/>
+                              <!-- Tag field -->
+                              <div class="col-md-12">
+                                 <title>Add tags</title>
+                                 <%- include ("../layouts/tagbox") %> 
+                              </div>
+                              <!-- Tag field -->
+                              <div class="mb-3 col-xl-12">
+                                 <label for="description" class="form-label">Blog Description Or Summary</label
+                                    >
+                                 <div class="input-group">
+                                    <textarea
+                                       style="min-height: 100px"
+                                       class="form-control"
+                                       id="description"
+                                       name="description"
+                                       ></textarea>
+                                 </div>
+                              </div>
+                              <div class="mb-3 col-xl-12">
+                                 <center>
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                    Add Video
+                                    </button>
+                                 </center>
+                              </div>
+                           </div>
+                        </form>
+                     </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    <script>
+    </script>
+    <div class="modal fade" id="bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Posts</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+            <i class="anticon anticon-close"></i>
+            </button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        function allData() {
+            $.get('../api/categories/all', (data) => {
+                let newHtml = '';
+                data.forEach((element) => {
+                    newHtml += `<option value="${element.id}">${element.name}</option>`;
+                });
+                $('#users').html(newHtml);
+            });
+        }
+
+        function deleteCategory(id) {
+            $.get(`/delete-category/${id}`, (data) => {
+                allData();
+            });
+        }
+        $(document).ready(function() {
+            allData();
+
+            $('form').submit(function(event) {
+                event.preventDefault();
+
+                var url = event.target.action; // get the target
+                var formData = $(this).serialize();
+                $.post(url, formData, function(response) {
+                    alert(response.message);
+                    response.code == 201 ? $('form').find('input').val('') : '';
+                });
+            });
+
+            $('#search_data').tokenfield({
+                autocomplete: {
+                    source: function(request, response) {
+                        jQuery.get('../api/categories/all-category-one', {
+                            query: request.term
+                        }, function(data) {
+                            ar = []
+                            data.forEach(object => ar.push(object.tag))
+                            response(ar);
+                        });
+                    },
+                    delay: 100
+                }
+            });
+
+            $('#search_data').tokenfield({
+                autocomplete: {
+                    source: function(request, response) {
+
+                        jQuery.get('../api/categories/all-category-one', {
+                            query: request.term
+                        }, function(data) {
+                            ar = []
+                            data.forEach(object => ar.push(object.tag))
+                            response(ar);
+                        });
+                    },
+                    delay: 100
+                }
+            });
+
+            $('#search').click(function() {
+                $('#country_name').text($('#search_data').val());
+            });
+
+        });
+    </script>
+    <script type="text/javascript" src="https://demo.dashboardpack.com/architectui-html-free/assets/scripts/main.js"></script>
+    </body>
+
+    </html>

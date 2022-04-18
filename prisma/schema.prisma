@@ -57,3 +57,10 @@ model users {
   bio       String? @db.VarChar(255)
   website   String? @db.VarChar(255)
 }
+
+model logs{
+  id        Int     @id @default(autoincrement())
+  log_data  String? @db.LongText()
+  createdAt DateTime @default(now())
+
+}

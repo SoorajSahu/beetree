@@ -3,8 +3,9 @@ const logger = require('morgan');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const { PrismaClient } = require("@prisma/client");
-
-const prisma = new PrismaClient;
+const { createPrismaQueryEventHandler } = require('prisma-query-log');
+const log = createPrismaQueryEventHandler();
+const prisma = new PrismaClient({ log: ['query', 'info'] });
 
 const importWeb = require('./src/app/init/web.import');
 const importAPI = require('./src/app/init/api.import');
@@ -21,7 +22,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: Date.now() + (30 * 86400 * 1000) },
-}))
+}));
 app.use(cookieParser());
 app.use(importWeb);
 app.use(importAPI);
@@ -32,7 +33,7 @@ async function main() {
         console.log('Server is created on 8000');
     });
 }
-
+prisma.$on('query', log);
 main()
     .catch((e) => {
         // eslint-disable-next-line no-console
@@ -41,4 +42,5 @@ main()
     .finally(async() => {
         await prisma.$disconnect()
     });
+
 module.exports = app;
